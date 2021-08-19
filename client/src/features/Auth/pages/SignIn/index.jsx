@@ -1,8 +1,10 @@
+import { Container } from '@material-ui/core';
 import 'firebase/auth';
 import React from "react";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import "../../node_modules/firebaseui/dist/firebaseui.css";
-import { auth, firebase } from "../firebase/index";
+import Banner from '../../../../components/Banner';
+import Header from '../../../../components/Header';
+import { auth, firebase } from "../../../../firebase/index";
 
 
     const uiConfig = {
@@ -20,11 +22,12 @@ import { auth, firebase } from "../firebase/index";
   
 function Login(){
     return (
-        <div>
-      <h1>Welcome to Ticketing Coach 1.0</h1>
+    <Container maxWidth="lg">
+      <Header />
+      <Banner/>
       <h3>Please Login</h3>
       <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-    </div>
+    </Container>
     )
 }
 

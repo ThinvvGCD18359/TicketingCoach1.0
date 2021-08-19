@@ -1,10 +1,20 @@
-import axiosClient from "./axiosClient";
+import firebase from 'firebase';
 
 const userApi = {
-    getAll = (params) => {
-    const url = '/products';
-    return axiosClient.get(url, { params });
-    },
+  getUser: () => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const currentUser = firebase.auth().currentUser;
+
+        resolve({
+          id: currentUser.uid,
+          name: currentUser.displayName,
+          email: currentUser.email,
+          photoUrl: currentUser.photoURL,
+        })
+      }, 500);
+    })
+  }
 }
 
 export default userApi;

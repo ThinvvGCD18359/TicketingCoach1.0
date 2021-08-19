@@ -2,9 +2,22 @@ const express = require("express");
 const cors = require("cors");
 const authMiddleware = require("./middleware/auth-middleware");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
+
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(express.json());
 
 
 app.use("/", authMiddleware);

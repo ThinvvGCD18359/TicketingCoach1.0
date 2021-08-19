@@ -1,23 +1,51 @@
-import React from "react";
+import { unwrapResult } from "@reduxjs/toolkit";
+import firebase from 'firebase';
+import React, { useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Login from "./pages/Login";
+import Login from "./features/Auth/index";
+import { getUser } from "./app/userSlice";
+import Profile from "./features/Profile/index";
 import Home from "./pages/Home";
-import View from "./pages/View";
-import Profile from "./pages/Proflie";
+import MainPage from "./layouts/Main";
+import Booking from "./features/Booking/pages";
 
 
 
 export default function App() {
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(async (user) => {
+      if (!user) {
+        console.log('User is not logged in');
+        return;
+      }
+      try {
+        const actionResult = await dispatch(getUser());
+        const currentUser = unwrapResult(actionResult);
+        console.log('Logged in user: ', currentUser);
+        localStorage.setItem('user', true);
+      } catch (error) {
+        console.log('Failed to login ', error.message);
+      }
+    });
+
+    return () => unregisterAuthObserver();
+  }, [dispatch]);
+
   return (
     <div className="App">
       <BrowserRouter>
+      
         <Switch>
-          <Route exact path={"/"} component = {Login}/>
+          <Route exact path={"/"} component = {MainPage}/>
           <Route exact path={"/home"} component = {Home}/>
-          <Route path={"/views"} component = {View}/>
+          <Route path={"/login"} component = {Login}/>
           <Route path={"/profile"} component = {Profile}/>
+          <Route path={"/booking"} component = {Booking}/>
         </Switch>
       </BrowserRouter>
     </div>

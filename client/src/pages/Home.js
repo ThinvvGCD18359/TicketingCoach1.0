@@ -21,7 +21,7 @@ function signOut() {
     if (firebase.auth().currentUser) {
         firebase.auth().signOut().then(() => {
             console.log("User successfully logged out");
-            window.location="/";
+            window.location="/login";
         }).catch(error => console.log('Something went wrong! ', error))
     } else {
       alert('user already logged out.');
@@ -30,14 +30,14 @@ function signOut() {
 }
 
 function Home() {
-  const [isSignedIn, setIsSignedIn] = useState(false); // Local signed-in state.
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-  // Listen to the Firebase Auth state and set the local state.
+  
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(user => {
       setIsSignedIn(!!user);
     });
-    return () => unregisterAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    return () => unregisterAuthObserver();
   }, []);
 
   if (!isSignedIn) {
