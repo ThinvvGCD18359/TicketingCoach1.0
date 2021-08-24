@@ -1,13 +1,14 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Container from '@material-ui/core/Container';
-import Header from '../components/Header';
-import Banner from '../components/Banner';
-import Footer from '../components/Footer';
-import Coach from '../features/Coach/index'
+import Header from '../../../components/Header';
+import Banner from '../../../components/Banner';
+import Footer from '../../../components/Footer';
+import { Typography } from '@material-ui/core';
 
 
-export default function MainPage() {
+
+export default function CheckOut() {
   
 
   return (
@@ -16,7 +17,9 @@ export default function MainPage() {
       <Container maxWidth="lg">
         <Header/>
           <Banner/>
-          <Coach/>
+          <Typography>
+            Check Out
+          </Typography> 
       </Container>
       <Footer/>
     </React.Fragment>

@@ -1,36 +1,52 @@
 import React from 'react';
-import firebase from 'firebase';
+import Header from '../../../../components/Header';
+import { Container, Typography } from '@material-ui/core';
+import Banner from '../../../../components/Banner';
+import Footer from '../../../../components/Footer';
 
 
 function UserProfile() {
-    const user = firebase.auth().currentUser;
-    const email = user.email;
-    const name = user.displayName;
-    const photoURL = user.photoURL;
-    const phoneNumber = user.phoneNumber;
+    const currentUser = JSON.parse(localStorage.getItem('user'));
 
-    if(user) {
-
-    if(!name) {
-      return (
-        <p>Hello {phoneNumber}</p>
-      )
+    if(localStorage.getItem('user')) {
+      const email = currentUser.email;
+      const name = currentUser.name;
+      const photoURL = currentUser.photoUrl;
+      const phoneNumber = currentUser.phoneNumber;
+      
+      if(!name) {
+        return (
+          <div>
+          <Container maxWidth="lg">
+          <Header/>
+          <Banner/>
+          <Typography>
+            User Profile:
+          </Typography>
+            <h3>Hello: {phoneNumber}</h3>
+          </Container>
+          <Footer/>
+          </div>
+        )
+      } else {
+        return(
+          <div>
+            <Container maxWidth="lg">
+            <Header/>
+            <Banner/>
+              <h3>Hello {name}! </h3>
+              <h3>Email: {email}! </h3>
+              <h3>PhotoURl: {photoURL}! </h3>    
+            </Container> 
+            <Footer/>       
+          </div>
+        )
+      }
     } else {
-      return(
-        <div>
-            <p>Hello {name}! </p>
-            <p>Email: {email}! </p>
-            <p>PhotoURl: {photoURL}! </p>            
-        </div>
-      )
-    }
-  } else {
       alert('Please login');
       return true; 
     }
 }
- 
- 
   
 
 

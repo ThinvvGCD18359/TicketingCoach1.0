@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   mainBanner: {
@@ -11,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[800],
     color: theme.palette.common.white,
     marginBottom: theme.spacing(4),
-    backgroundImage: 'url(https://source.unsplash.com/random)',
     backgroundSize: 'fill',
     backgroundPosition: 'center',
   },
@@ -39,13 +37,12 @@ export default function Banner(props) {
     title: 'Ticketing Coach',
     description:
       "The best solutions to travel",
-    image: 'https://bitly.com.vn/v30gok',
-    linkText: 'More information…',
+    image: 'https://bitly.com.vn/yovif3',
+    
   };
 
   return (
     <Paper className={classes.mainBanner} style={{ backgroundImage: `url(${banner.image})` }}>
-      {/* Increase the priority of the hero background image */}
       {<img style={{ display: 'none' }} src={banner.image} alt={banner.imageText} />}
       <div className={classes.overlay} />
       <Grid container>
@@ -57,9 +54,7 @@ export default function Banner(props) {
             <Typography variant="h5" color="inherit" paragraph>
               {banner.description}
             </Typography>
-            <Link variant="subtitle1" href="#">
-              {banner.linkText}
-            </Link>
+        
           </div>
         </Grid>
       </Grid>

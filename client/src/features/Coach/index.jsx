@@ -9,6 +9,7 @@ function Coach(props) {
    return (
       <Switch>
          <Route exact path={match.url} component={CoachPage} />
+         <Route path={`${match.url}/coach`} component={CoachPage} />
       </Switch>
    );
 }

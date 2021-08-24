@@ -28,7 +28,7 @@ export default function Coach(props) {
       date: 'Aug 12',
       description:
         'Test.',
-      image: 'https://bitly.com.vn/iw7uqr',
+      image: 'https://bitly.com.vn/h2s1qe',
     }
    
 

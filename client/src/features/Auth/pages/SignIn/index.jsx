@@ -3,13 +3,14 @@ import 'firebase/auth';
 import React from "react";
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import Banner from '../../../../components/Banner';
+import Footer from '../../../../components/Footer';
 import Header from '../../../../components/Header';
 import { auth, firebase } from "../../../../firebase/index";
 
 
     const uiConfig = {
         signInFlow: 'popup',
-        signinSuccessUrl: '/home',
+        signinSuccessUrl: '/',
         signInOptions: [
             firebase.auth.GoogleAuthProvider.PROVIDER_ID,
             firebase.auth.PhoneAuthProvider.PROVIDER_ID,
@@ -22,12 +23,15 @@ import { auth, firebase } from "../../../../firebase/index";
   
 function Login(){
     return (
-    <Container maxWidth="lg">
-      <Header />
-      <Banner/>
-      <h3>Please Login</h3>
-      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
-    </Container>
+        <div>
+            <Container maxWidth="lg">
+            <Header />
+            <Banner/>
+            <h3>Please Login</h3>
+            <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={auth} />
+            </Container>
+            <Footer/>
+        </div>
     )
 }
 

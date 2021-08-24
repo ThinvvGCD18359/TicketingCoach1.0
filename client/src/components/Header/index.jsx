@@ -15,9 +15,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import SearchIcon from '@material-ui/icons/Search';
 import clsx from 'clsx';
-import React from 'react';
+import firebase from 'firebase';
+import React, { useEffect, useState } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -36,7 +36,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header(props) {
+function signOut() {
+  if (firebase.auth().currentUser) {
+      firebase.auth().signOut().then(() => {
+          console.log("User successfully logged out");
+          localStorage.clear();
+          window.location="/login";
+      }).catch(error => console.log('Something went wrong! ', error))
+  } else {
+    alert('user already logged out.');
+    return true;      
+  }
+}
+
+export default function Header() {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -50,94 +63,89 @@ export default function Header(props) {
     setOpen(false);
   };
 
-  // const sections = [
-  //   { title: 'Test 1', url: '#' },
-  //   { title: 'Test 2', url: '#' },
-  //   { title: 'Test 3', url: '#' },
-  //   { title: 'Test 4', url: '#' },
-  //   { title: 'Test 5', url: '#' },
-  // ];
+  const [loginStatus, setLoginStatus] = useState(false);
+  useEffect(()=> {
+    setLoginStatus(localStorage.getItem('user')? true : false);
+  },[])
+  console.log(loginStatus)
 
-  return (
-    <React.Fragment>
-      <CssBaseline>
-      <Toolbar className={classes.toolbar}>
-          <IconButton
+    return (
+      <React.Fragment>
+        <CssBaseline>
+        <Toolbar className={classes.toolbar}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              className={clsx(classes.menuButton, open && classes.hide)}
+            >
+              <MenuIcon />
+            </IconButton>
+          <Button size="large" href="/">Home</Button>
+          <Typography
+            component="h2"
+            variant="h5"
             color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-        <Button size="large" href="/">Home</Button>
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {"Welcome to Ticketing Coach 1.0"}
-        </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <Button variant="outlined" size="small" href="/login">
-          Sign In
-        </Button>
-      </Toolbar>
-
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
-      </Drawer>
-      {/* <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        {sections.map((section) => (
-          <Link
-            color="inherit"
+            align="center"
             noWrap
-            key={section.title}
-            variant="body2"
-            href={section.url}
-            className={classes.toolbarLink}
+            className={classes.toolbarTitle}
           >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar> */}
-      </CssBaseline>
-    </React.Fragment>
-  );
+            Welcome to Ticketing Coach 1.0
+          </Typography>
+             {loginStatus? 
+             (
+               <>
+               <Button href="/profile">Profile</Button>
+          
+               <Button variant="outlined" size="small" onClick={signOut}>
+                 Sign Out
+               </Button>
+               </>
+             ): (
+               <>
+               <Button variant="outlined" size="small" href="/login">
+                 Sign In
+               </Button>
+               </>
+             )}  
+          
+        </Toolbar>
+  
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+        </CssBaseline>
+      </React.Fragment>
+    );
 }

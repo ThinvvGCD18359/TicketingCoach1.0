@@ -7,9 +7,9 @@ import "./App.css";
 import Login from "./features/Auth/index";
 import { getUser } from "./app/userSlice";
 import Profile from "./features/Profile/index";
-import Home from "./pages/Home";
 import MainPage from "./layouts/Main";
-import Booking from "./features/Booking/pages";
+import Booking from "./features/Booking/components/BookingSeats";
+import CheckOut from "./features/Checkout/pages";
 
 
 
@@ -25,9 +25,9 @@ export default function App() {
       }
       try {
         const actionResult = await dispatch(getUser());
-        const currentUser = unwrapResult(actionResult);
+        const currentUser = unwrapResult(actionResult); 
         console.log('Logged in user: ', currentUser);
-        localStorage.setItem('user', true);
+        localStorage.setItem('user', JSON.stringify(currentUser));
       } catch (error) {
         console.log('Failed to login ', error.message);
       }
@@ -39,13 +39,12 @@ export default function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      
         <Switch>
           <Route exact path={"/"} component = {MainPage}/>
-          <Route exact path={"/home"} component = {Home}/>
           <Route path={"/login"} component = {Login}/>
           <Route path={"/profile"} component = {Profile}/>
           <Route path={"/booking"} component = {Booking}/>
+          <Route path={"/checkout"} component = {CheckOut}/>
         </Switch>
       </BrowserRouter>
     </div>
