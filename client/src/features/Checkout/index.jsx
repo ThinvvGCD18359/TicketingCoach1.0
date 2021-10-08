@@ -1,19 +1,16 @@
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import Checkout from './pages/index';
+import CheckoutForm from './pages/stripeContainer';
 
-CheckOut.propTypes = {};
-
-function CheckOut(props) {
+function Checkout() {
    const match = useRouteMatch();
    console.log('Checkout: ', { match });
 
    return (
       <Switch>
-         <Route exact path={match.url} component={Checkout} />
-         <Route path={`${match.url}/checkout`} component={Checkout} />
+         <Route exact path={match.url} component={CheckoutForm} />
       </Switch>
    );
 }
 
-export default CheckOut;
+export default Checkout;

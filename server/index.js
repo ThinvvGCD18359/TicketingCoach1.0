@@ -1,9 +1,12 @@
 const express = require("express");
 const cors = require("cors");
-const authMiddleware = require("./middleware/auth-middleware");
+const route = require("./routes");
+
 
 const PORT = process.env.PORT || 3001;
 const app = express();
+
+
 app.use(
   cors({
     origin: 'http://localhost:3000',
@@ -19,12 +22,7 @@ app.use(
 
 app.use(express.json());
 
+route(app);
 
-app.use("/", authMiddleware);
 
-app.get('/logout', (req, res) => {
-  req.logout()
-  res.redirect('/')
-})
-
-app.listen(PORT, () => console.log("The server is running on http://localhost:${PORT}"));
+app.listen(PORT, () => console.log("The server is running on http://localhost:3001"));

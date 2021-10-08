@@ -1,6 +1,7 @@
  import React, { useState } from "react";
  import clsx from "clsx";
  import "./booking.scss"
+import { Button } from "@material-ui/core";
  
  const tickets = [
    {
@@ -20,6 +21,10 @@
  export default function Booking() {
    const [selectedTicket, setSelectedTicket] = useState(tickets[0]);
    const [selectedSeats, setSelectedSeats] = useState([]);
+   const handleSubmit = e => {
+    e.preventDefault()
+    window.location.href = "/checkout"
+} 
  
    return (
      <div className="booking">
@@ -46,6 +51,7 @@
            {selectedSeats.length * selectedTicket.price}$
          </span>
        </p>
+       <Button onClick={handleSubmit}>Pay</Button>
      </div>
    );
  }
@@ -98,6 +104,8 @@
        onSelectedSeatsChange([...selectedSeats, seat]);
      }
    }
+
+   
  
    return (
      <div className="Coach">
@@ -130,6 +138,7 @@
            );
          })}
        </div>
+       
      </div>
    );
  }

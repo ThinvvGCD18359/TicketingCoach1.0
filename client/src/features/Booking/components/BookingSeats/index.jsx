@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Banner from '../../../../components/Banner';
 import Footer from '../../../../components/Footer';
 import Header from '../../../../components/Header';
+import coachApi from '../../../../api/coachApi';
 import './SeatMap.scss';
 
 
@@ -12,7 +13,7 @@ export default function SeatSelection() {
     const [name, setName] = useState([])
     const [arrowDown, setArrowDown] = useState(false)
     const [gender, setGender] = useState([])
-    const [reservedSeat, setReservedSeat] = useState(["1A", "2A", "2B", "3B", "4A", "5C", "6A", "7B", "7C", '8B', "9B", "9C"])
+    const [reservedSeat, setReservedSeat] = useState([false])
     const [seatNumber, setSeatnumber] = useState([])
  
     const getSeatNumber = (e) => {
@@ -42,11 +43,16 @@ export default function SeatSelection() {
             setName(name.concat(value))
         }
     }
-    const handleSubmitDetails = e => {
+    const handleSubmitDetails = async (e) => {
         e.preventDefault()
         setArrowDown(true)
-        localStorage.setItem("reservedSeats", JSON.stringify(seatNumber))
-        localStorage.setItem("nameData", JSON.stringify(name))
+        setReservedSeat(true)
+        try {
+            const response = await coachApi.addSeat(seatNumber);
+            console.log(response);
+        } catch (error) {
+            console.log(error);
+        }
         window.alert('Seat Confirmed.')
         window.location.href = "/checkout"
     }

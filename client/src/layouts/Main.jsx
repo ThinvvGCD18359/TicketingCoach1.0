@@ -4,7 +4,8 @@ import Container from '@material-ui/core/Container';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
-import Coach from '../features/Coach/index'
+import HomePage from '../features/Home/pages';
+
 
 
 export default function MainPage() {
@@ -16,7 +17,7 @@ export default function MainPage() {
       <Container maxWidth="lg">
         <Header/>
           <Banner/>
-          <Coach/>
+          <HomePage/>
       </Container>
       <Footer/>
     </React.Fragment>

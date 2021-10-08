@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import coachPic from '../../images/coach.png';
 
 const useStyles = makeStyles((theme) => ({
   mainBanner: {
@@ -36,14 +37,12 @@ export default function Banner(props) {
   const banner = {
     title: 'Ticketing Coach',
     description:
-      "The best solutions to travel",
-    image: 'https://bitly.com.vn/yovif3',
-    
+      "The best solutions to travel",    
   };
 
   return (
-    <Paper className={classes.mainBanner} style={{ backgroundImage: `url(${banner.image})` }}>
-      {<img style={{ display: 'none' }} src={banner.image} alt={banner.imageText} />}
+    <Paper className={classes.mainBanner} style={{ backgroundImage: `url(${coachPic})` }}>
+      {<img style={{ display: 'none' }} src={coachPic} alt='coach' />}
       <div className={classes.overlay} />
       <Grid container>
         <Grid item md={6}>

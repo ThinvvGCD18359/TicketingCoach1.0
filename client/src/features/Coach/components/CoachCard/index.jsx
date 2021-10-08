@@ -7,6 +7,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
+import PropTypes from 'prop-types';
+import { Container } from '@material-ui/core';
+
 
 const useStyles = makeStyles({
   card: {
@@ -21,35 +24,38 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Coach(props) {
+CoachCard.propTypes = {
+  coaches: PropTypes.array,
+};
+
+CoachCard.defaultProps = {
+  coaches: [],
+};
+
+export default function CoachCard(props) {
   const classes = useStyles();
-  const coach = {
-      title: 'DN - SG',
-      date: 'Aug 12',
-      description:
-        'Test.',
-      image: 'https://bitly.com.vn/h2s1qe',
-    }
+  const { coaches } = props;
    
 
   return (
+    <Container>
     <Grid item xs={12}>
+      {coaches.map((coach) => (
       <CardActionArea href="/booking">
-        <Card className={classes.card}>
+          
+          <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
               <Typography component="h2" variant="h5">
-                {coach.title}
+                {coach.name}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
-                {coach.date}
+                {coach.plates}
               </Typography>
-              <Typography variant="subtitle1" paragraph>
-                {coach.description}
+              <Typography variant="subtitle1" color="textSecondary">
+                {coach.phonenumber}
               </Typography>
-              <Typography variant="subtitle1" color="primary">
-                View
-              </Typography>
+
             </CardContent>
           </div>
           <Hidden xsDown>
@@ -57,6 +63,8 @@ export default function Coach(props) {
           </Hidden>
         </Card>
       </CardActionArea>
+      ))}
     </Grid>
+    </Container>
   );
 }

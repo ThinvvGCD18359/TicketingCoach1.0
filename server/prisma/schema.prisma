@@ -18,6 +18,33 @@ model User {
 model Coach {
   id        Int      @default(autoincrement()) @id
   name      String?
-  route     String?
+  phonenumber   String?  @unique
+  plates    String?   @unique
+  Driver    Driver[]
+  Route     Route[]
+  Seat      Seat[]
 }
 
+model Driver {
+  coachId   Int?
+  id        Int     @default(autoincrement()) @id
+  name      String?
+  Coach     Coach?   @relation(fields: [coachId], references: [id])
+}
+
+model Route {
+  coachId   Int?
+  id        Int     @default(autoincrement()) @id
+  starting  String?
+  destination String?
+  departure   DateTime
+  price     Int?
+  Coach     Coach?   @relation(fields: [coachId], references: [id])
+}
+
+model Seat {
+  coachId   Int?
+  id        Int     @default(autoincrement()) @id
+  number    String?
+  Coach     Coach?   @relation(fields: [coachId], references: [id])
+}

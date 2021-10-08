@@ -4,20 +4,21 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MailIcon from '@material-ui/icons/Mail';
+import DirectionsBusIcon from '@material-ui/icons/DirectionsBus';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import clsx from 'clsx';
 import firebase from 'firebase';
 import React, { useEffect, useState } from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import AirportShuttleIcon from '@material-ui/icons/AirportShuttle';
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -54,6 +55,8 @@ export default function Header() {
   const theme = useTheme();
 
   const [open, setOpen] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const enable = Boolean(anchorEl);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -61,6 +64,14 @@ export default function Header() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const [loginStatus, setLoginStatus] = useState(false);
@@ -96,15 +107,37 @@ export default function Header() {
              {loginStatus? 
              (
                <>
-               <Button href="/profile">Profile</Button>
-          
-               <Button variant="outlined" size="small" onClick={signOut}>
-                 Sign Out
-               </Button>
+               <IconButton
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={enable}
+                onClose={handleClose}
+              >
+                <MenuItem component='a' href='/profile'>Profile</MenuItem>
+                <MenuItem onClick={signOut}>Sign Out</MenuItem>
+              </Menu>
                </>
              ): (
                <>
-               <Button variant="outlined" size="small" href="/login">
+               <Button variant="contained" href="/login">
                  Sign In
                </Button>
                </>
@@ -128,21 +161,21 @@ export default function Header() {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <IconButton href='/coach/createcoach'>
+              <DirectionsBusIcon />Create new Coach
+            </IconButton>
+            <Divider />
+            <IconButton href='/coach/createroute'>
+              <DirectionsBusIcon />Create new Route
+            </IconButton>
+            <Divider />
+            <IconButton href='/coach'>
+              <AirportShuttleIcon />List Coaches
+            </IconButton>
+            <Divider />
+            <IconButton href='#'>
+              <EqualizerIcon />Statistics
+            </IconButton>
           </List>
         </Drawer>
         </CssBaseline>

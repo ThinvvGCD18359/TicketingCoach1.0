@@ -8,8 +8,9 @@ import Login from "./features/Auth/index";
 import { getUser } from "./app/userSlice";
 import Profile from "./features/Profile/index";
 import MainPage from "./layouts/Main";
-import Booking from "./features/Booking/components/BookingSeats";
-import CheckOut from "./features/Checkout/pages";
+import Booking from "./features/Booking/components/BookingSeats/index";
+import Checkout from "./features/Checkout/index";
+import Coach from "./features/Coach";
 
 
 
@@ -43,8 +44,9 @@ export default function App() {
           <Route exact path={"/"} component = {MainPage}/>
           <Route path={"/login"} component = {Login}/>
           <Route path={"/profile"} component = {Profile}/>
+          <Route path={"/coach"} component = {Coach}/>
           <Route path={"/booking"} component = {Booking}/>
-          <Route path={"/checkout"} component = {CheckOut}/>
+          <Route path={"/checkout"} component = {Checkout}/>
         </Switch>
       </BrowserRouter>
     </div>
